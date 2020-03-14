@@ -17,7 +17,6 @@ class MergeSort {
         int [] test2 = new int[] {1, 2, 3, 4, 5};
         int [] test3 = new int[] {1, 1, 1};
 
-        // sort(test1);
         Arrays.stream(sort(test1)).forEach(s -> System.out.print(s + " "));
         System.out.println();
         Arrays.stream(sort(test2)).forEach(s -> System.out.print(s + " "));
