@@ -29,32 +29,30 @@ class MergeSort {
     }
 
     private static int[] mergesort(int[] nums, int start, int end) {
-        if (start < end) {
-            int mid = start + (end - start) / 2;
-            int[] left = mergesort(nums, start, mid);
-            int[] right = mergesort(nums, mid + 1, end);
-            int[] sorted = new int[end - start + 1];
-            int i = 0, j = 0, p = 0;
-            while (p <= end - start) {
-                if (i >= left.length) {
-                    sorted[p] = right[j];
-                    j ++;
-                } else if (j >= right.length) {
-                    sorted[p] = left[i];
-                    i ++;
-                } else if (left[i] <= right[j]) {
-                    sorted[p] = left[i];
-                    i ++;
-                } else {
-                    sorted[p] = right[j];
-                    j ++;
-                }
-                p ++;
-            }
-            return sorted;
-        } else {
-            int[] sorted = {nums[start]};
-            return sorted;
+        if (start >= end) {
+            return new int[] {nums[start]};
         }
+        int mid = start + (end - start) / 2;
+        int[] left = mergesort(nums, start, mid);
+        int[] right = mergesort(nums, mid + 1, end);
+        int[] sorted = new int[end - start + 1];
+        int i = 0, j = 0, p = 0;
+        while (p <= end - start) {
+            if (i >= left.length) {
+                sorted[p] = right[j];
+                j ++;
+            } else if (j >= right.length) {
+                sorted[p] = left[i];
+                i ++;
+            } else if (left[i] <= right[j]) {
+                sorted[p] = left[i];
+                i ++;
+            } else {
+                sorted[p] = right[j];
+                j ++;
+            }
+            p ++;
+        }
+        return sorted;
     }
 }
