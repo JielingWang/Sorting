@@ -1,13 +1,19 @@
 import java.util.Arrays;
 
 /**
- * Quick Sort
+ * Quick Sort (Tree-way Quick Sort)
  * Step1: Partition around a pivot item (e.g. leftmost)
  * Step2: Quick sort left side, all keys < pivot
  * Step3: Quick sort right side, all keys >= pivot
  * Time Complexity: Average O(NlogN), Worst O(N-square)
- * Space Complexity: O(1)
- * Unstable
+ * Space Complexity: O(1)  Unstable
+ * Partition algo: (pivot is the leftmost item)
+ * Step1: Find pivot's correct position in [left+1, right-1]
+ * Step2: Go over the array from left+1 to right-1,
+ *        if nums[i] < pivot, expand left side
+ *        if nums[i] > pivot, expend right side
+ *        otherwise move on
+ * Step3: Swap pivot with the rightmost left side item
  */
 
 class QuickSort {
@@ -38,26 +44,30 @@ class QuickSort {
         if (start >= end) return;
         int pidx = partition(nums, start, end);
         quicksort(nums, start, pidx - 1);
-        quicksort(nums, pidx, end);
+        quicksort(nums, pidx + 1, end);
     }
 
     private static int partition(int[] nums, int start, int end) {
         int pivot = nums[start];
         int left = start;
-        int right = end;
-        while (left <= right) {
-            while (left <= right && nums[left] < pivot) {
+        int right = end + 1;
+        int i = start + 1;
+        while (i < right) {
+            if (nums[i] < pivot) {
                 left ++;
-            }
-            while (left <= right && nums[right] > pivot) {
+                i ++;
+            } else if (nums[i] > pivot) {
+                swap(nums, right - 1, i);
                 right --;
-            }
-            if (left <= right) {
-                swap(nums, left, right);
-                left ++;
-                right --;
+            } else {
+                i ++;
             }
         }
+        // for now: i == right
+        // [start+1, left] < pivot
+        // [right, end] > pivot
+        // [left+1, right-1] == pivot
+        swap(nums, start, left);
         return left;
     }
 
